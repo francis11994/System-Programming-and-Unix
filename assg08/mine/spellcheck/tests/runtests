@@ -1,0 +1,11 @@
+./spellcheck -d tests/wordsEn.txt -i tests/infile1
+./spellcheck -d tests/wordsEn.txt < tests/infile1
+./spellcheck -d tests/wordsEn.txt -i tests/infile1 -u
+./spellcheck -d tests/wordsEn.txt -i tests/infile2
+./spellcheck -d tests/wordsEn.txt -i tests/infile2 -u
+./spellcheck -i aaa -i bbb -i ccc
+./spellcheck -i aaa
+./spellcheck -d aaa -d bbb
+./spellcheck -u -u -u
+./spellcheck -x
+./spellcheck -d tests/wordsEn.txt -i unreadable-file
