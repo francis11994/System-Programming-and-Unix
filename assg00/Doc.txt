@@ -1,0 +1,12 @@
+CSC 352 Spring 2016: Assignment 0
+---------------------------------
+
+1. What is your name?
+Francis Kim
+
+
+2. What is your quest?
+In this course, My quest is learning new C programming language which is different with Java based on Unix, and learning how to manimuplate lectura system. This course will be effected on my future courses which are 400 levels, and also effected to even after graduate. And after graduate, my quest is doing Software Developer and experience more programming world, and developing software my own.
+
+3. What is the airspeed velocity of an unladen swallow?
+It is 10 meters per second.
