@@ -1,0 +1,4 @@
+@target spellcheck : spellcheck.c
+@cmd gcc -wall
+@target spellcheck : spellcheck.h spellcheck.o 
+@cmd gcc -wall

@@ -1,0 +1,24 @@
+
+==== SCORES FOR strmath ====
+
+TEST CASES:
+strmath_test1 failed.
+1c1
+< 0001913400
+---
+> 1913400
+
+strmath_test2 failed.
+1c1
+< 00019134
+---
+> 19134
+
+strmath_test3 passed.
+strmath_test4 failed.
+1c1
+< 99:99998
+---
+> 100099998
+
+strmath_test5 passed.

@@ -1,0 +1,2 @@
+@target spellcheck.c : spellcheck.h
+@cmd gcc

@@ -1,0 +1,24 @@
+
+==== SCORES FOR strmath ====
+
+TEST CASES:
+strmath_test1 passed.
+strmath_test2 passed.
+strmath_test3 passed.
+strmath_test4 passed.
+strmath_test5 passed.
+strmath_test6 passed.
+strmath_test7 passed.
+
+ERROR CASES:
+strmath_err1 passed.
+strmath_err2 passed.
+
+SUMMARY for strmath:
+Test cases passed:  7/7
+Error cases passed: 2/2
+Score per test case: 2.22
+Compile warnings deduction: 0
+Program score:        20.00/20
+
+

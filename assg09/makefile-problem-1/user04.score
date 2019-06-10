@@ -1,0 +1,24 @@
+
+==== SCORES FOR strmath ====
+
+TEST CASES:
+strmath_test1 failed, produced memory errors under Valgrind.
+strmath_test2 passed.
+strmath_test3 failed. Exit code was 1, expected 0. You will only be penalized once for this for normal test cases.
+strmath_test4 passed.
+strmath_test5 passed.
+strmath_test6 failed, produced memory errors under Valgrind.
+strmath_test7 failed, produced memory errors under Valgrind.
+
+ERROR CASES:
+strmath_err1 passed.
+strmath_err2 failed, produced memory errors under Valgrind.
+
+SUMMARY for strmath:
+Test cases passed:  3/7
+Error cases passed: 1/2
+Score per test case: 2.22
+Compile warnings deduction: 0
+Program score:        9/20
+
+

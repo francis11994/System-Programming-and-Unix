@@ -1,0 +1,2 @@
+@target spellcheck : spellcheck.c spellcheck.o
+@cmd 

@@ -1,0 +1,18 @@
+
+./mymake spellcheck						
+./mymake spellcheck spellcheck spellcheck
+./mymake spellcheck spellcheck
+./mymake ./tests/test1 spellcheck
+./mymake ./tests/test2 spellcheck
+./mymake ./tests/test3 spellcheck
+./mymake ./tests/test4 spellcheck
+./mymake ./tests/test5 spellcheck
+./mymake ./tests/test6 spellcheck
+./mymake ./tests/test7 spellcheck
+./mymake ./tests/test8 spellcheck
+./mymake ./tests/test9 spellcheck
+./mymake ./tests/test10 spellcheck
+./mymake ./tests/test spellcheck	
+./mymake ./tests/test spellcheck
+
+

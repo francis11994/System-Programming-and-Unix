@@ -1,0 +1,24 @@
+
+==== SCORES FOR strmath ====
+
+TEST CASES:
+strmath_test1 passed.
+strmath_test2 passed.
+strmath_test3 failed, produced memory errors under Valgrind.
+strmath_test4 failed, produced memory errors under Valgrind.
+strmath_test5 passed.
+strmath_test6 passed.
+strmath_test7 failed, produced memory errors under Valgrind.
+
+ERROR CASES:
+strmath_err1 passed.
+strmath_err2 passed.
+
+SUMMARY for strmath:
+Test cases passed:  4/7
+Error cases passed: 2/2
+Score per test case: 2.22
+Compile warnings deduction: 0
+Program score:        13.33/20
+
+
