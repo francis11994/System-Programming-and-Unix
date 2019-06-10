@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>CSc 352: Sum of Squares in a Range</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<link href="../../style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body bgcolor="white">
+
+<h1>CSc 352: Sum of Squares</h1>
+Write a program, in a file <b>sumSquares.c</b>, as specified below:
+<p/>
+<ul>
+  <li>
+    <b>Behavior:</b>
+    The program reads in two positive integers <i>m</i> and <i>n</i> from <b><tt>stdin</tt></b>
+    and prints out all the numbers in the interval <b>[</b><i>m</i>, <i>n</i><b>]</b>
+    (i.e., <i>m</i> and <i>n</i> are included in the range of values considered) which can be
+	written as the sum of two squares. A number N can be written as the sum of two squares if there
+	exists two postive integers p and r such that N = p<sup>2</sup> + r<sup>2</sup>. For example, 5 can be
+	written as the sum of two squares since 5 = 1 + 4 = 1<sup>2</sup> + 2<sup>2</sup>. 6, on the other
+	hand, cannot be written as the sum of two squares. Also notice that by this definition 4 is not
+	the sum of two squares since neither p or r are allowed to be 0. (0 is not positive.)
+    <p/>
+    If <i>m</i> &gt; <i>n</i> then the interval is empty and nothing is printed out.
+    <p/>
+  </li>
+  <li>
+    <b>Input:</b> Two positive integer values specifying, respectively, the beginning
+    and end of an integer interval.
+    <p/>
+  </li>
+  <li>
+    <b>Output:</b> A sequence of numbers in ascending order, one per line, 
+    printed out using the statement
+    <blockquote>
+      <b><tt>printf(&quot;%d\n&quot;, num)</tt></b>
+    </blockquote>
+    where <b><tt>num</tt></b> is a number that can be written as the sum of two squares which is
+	being printed out. Notice that you don't have to print out the squares.
+    <p/>
+  </li>
+  <li>
+    <b>Error Conditions:</b>
+    It is an error if your program cannot read two integers from <b><tt>stdin</tt></b>
+    or if either of the values read is not positive.
+    If an error occurs, your program should print an appropriate error message to
+    <b><tt>stderr</tt></b> and exit with the appropriate status value.
+    <p/>
+  </li>
+  <li>
+    <b>Hint:</b>
+    You may find the function  <b><tt>sqrt</tt></b> helpful for this program.
+	You can use the man command to find information on this function. It is part
+	of the math library. Using functions from this library in your program, requires specifying to the 
+	compiler/linker that the math library needs to be linked in. you do this by adding
+	"lm" at the end of the compiler invocation:
+		<b>gcc  -Wall <em><tt>programName.c</tt></em> -lm</b>
+
+    <p/>
+  </li>
+
+
+
+
+
+</ul>
+</body>
+</html>
+

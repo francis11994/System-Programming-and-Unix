@@ -1,0 +1,11 @@
+@target a : b c d
+@cmd whatever
+
+@target b : c d e f g
+@cmd whatever
+
+@target f : a s a b
+@cmd whatever
+
+@target d : d b a
+@cmd whatever

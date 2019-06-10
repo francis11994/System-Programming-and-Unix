@@ -1,0 +1,277 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>CSc 352: myls</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<link href="../../style.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body bgcolor="white">
+<p>
+<img src="../../IMGS/uadcs.gif" alt="University of Arizona, Department of Computer Science"/>
+</p>
+
+<h1>CSc 352: myls</h1>
+
+The purpose of this problem is to implement the basic functionality of
+the Unix command <b>ls</b> that lists the files in a directory.  The intent is
+to give you both practice working with command line arguments, and also some
+experience manipulating Unix system data structures.
+<p/>
+Background information on how directories are represented is given below
+in the section <b>Background: Reading Unix Directories</b>.
+<p/>
+
+<h2>The Problem</h2>
+
+Write a C program that behaves as follows:
+<p/>
+<ul>
+  <li>
+    <b>Invocation:</b>
+    Your program will be compiled to an executable named <b>myls</b> and invoked as follows:
+     <blockquote>
+       <b><tt>myls</tt></b> &nbsp; [ <i>dirName</i> ]
+     </blockquote>
+     where square brackets represent an optional command-line argument.
+     If specified, <i>dirName</i> is the name of a directory.
+     <p/>
+   </li>
+   <li>
+     <b>Behavior:</b>
+     Your program should list on <b>stdout</b> the contents of the directory 
+     specified on the command line, including hidden files.  If no command line
+     argument is provided, the contents of the current directory (i.e., the
+     directory in which the program is being executed) should be listed.
+     <p/>
+   </li>
+   <li>
+     <b>Errors:</b> The following are fatal errors.  In each case, your program
+     should give an appropriate error message and exit with status <b>1</b>.
+     <p/>
+       <ul>
+         <li>
+ 	   Too many command-line arguments.
+         </li>
+	 <li>
+	   The command line argument specified is not the name of a directory.
+	 </li>
+	 <li>
+	   The directory to be processed cannot be opened successfully (this can
+           happen if the file specified does not exist, or is not a directory, or does
+           not have appropriate permissions).  Use <b>perror</b> to generate 
+	   meaningful error messages.
+         </li>
+       </ul>
+     <p/>
+   </li>
+   <li>
+     <b>Output:</b>
+     The file names should be listed, one per line, sorted in the order specified
+     by <b><tt>strcmp</tt></b> (i.e., <i>f1</i> should come before <i>f2</i> if 
+     <i>f1</i> precedes <i>f2</i> according to <b><tt>strcmp</tt></b>).  
+     All of the file names in the directory, including any hidden files, should
+     be listed.  No other output other than that specified here should be generated.
+     <p/>
+   </li>
+</ul>
+
+<h2>Assumptions and Restrictions</h2>
+
+     The point of this exercise is to work with
+     pointers and dynamic data structures.  Programs that use 
+     statically preallocated memory, or which use arrays and
+     <b>realloc</b>, will not get credit.
+     <p/>
+
+
+<h2>Building and Testing Your Program</h2>
+
+<ul>
+  <li>
+    <b>Code coverage:</b> 
+    In addition to the source code for your program, you should submit
+    test cases that achieve at least 90% code coverage under <b>gcov</b>.
+    Code coverage tests will be done on code that
+    has been formatted using <b>indent &ndash;kr</b>.
+    <p/>
+    Writing code coverage tests for this problem has two wrinkles, both related to
+    the fact that the program's execution is no longer driven just by inputs
+    read from <b>stdin</b>.  First, the execution paths taken&ndash;and therefore
+    the code coverage obtained&ndash;will depend on the command line options specified.
+    Second, the program's execution will depend on the dictionary and/or input files
+    specified.
+    <p/>
+    To deal with these issue, submit your code coverage tests in a directory
+    <b>tests</b> as specified below.
+    <p/>
+    <ul>
+      <li>
+	The directory <b>tests</b> contains the files (both dictionaries and input
+	files) used by your coverage tests.  You can name these files whatever you like.
+      </li>
+      <li>
+	The directory <b>tests</b> contains a single file <b>runtests</b> that
+	contains a set of commands to run your program, one command per line.
+	An example is shown <a href="example-runtests-myls" target="_blank">here</a>.
+	Once you have created this file of commands, you can execute all of the
+	commands within this file using the command
+	<blockquote>
+	  <b><tt>sh  tests/runtests</tt></b>
+	</blockquote>
+	<b>Note:</b> Each command in the <b>tests/runtests</b> file should work when
+	executed in the directory containing the Makefile and the executable for
+	this program.
+	<p/>
+      </li>
+    </ul>
+    <p/>	
+  </li>
+  <li>
+    <b>Makefile:</b>
+    In addition to your source files, you should submit a make file
+    named <b>Makefile</b> that supports at least the following functionality:
+    <blockquote>
+      <dl>
+        <dt><b>make myls</b></dt>
+        <dd>Compiles the C source code to create an executable named
+    	<b><tt>myls</tt></b>.  The compiler options used should
+    	include <b><tt>-Wall</tt></b>.
+    	<p/>
+      </dd>
+      <dt><b>make coverage</b> (phony target)</dt>
+      <dd>
+        Compiles the source program with the <b>gcc</b> options needed
+        by the <b>gcov</b> tool, namely, 
+        &quot;<b><tt>-fprofile-arcs -ftest-coverage</tt></b>&quot;.
+        <p/>
+      </dd>
+      <dt><b>make clean</b> (phony target)</dt>
+      <dd>
+        Deletes all object files (<b><tt>*.o</tt></b>), if any, as well as the
+        executable <b><tt>myls</tt></b> and files generated by <b>gcov</b>
+        (<b><tt>*.gcov, *.gcno, *.gcda</tt></b>).
+      </dd>
+      </dl>
+    </blockquote>
+    <p/>
+  </li>
+</ul>
+
+<h2>Submitting Your Assignment</h2>
+
+    Collect all of the files related to this assignment, as described below, into a
+    directory named <b>myls</b> and use the <b><tt>turnin</tt></b> command to submit
+    this directory (this will cause all of the files in the directory to be submitted).
+    The directory <b>myls</b> should contain:
+    <p/>
+    <ul>
+      <li>
+        the C source code for your program;
+      </li>
+      <li>
+    	A makefile, as described above; and
+      </li>
+      <li>
+    	a directory named <b>tests</b> that contains a command file and associated
+	dictionary and input files, for code coverage tests, as described above under 
+	<b>Building and Testing Your Program</b>.
+	<p/>
+      </li>
+    </ul>
+ <p/>
+<hr/>
+<p/>
+<h2>Background: Reading Unix Directories</h2>
+
+Conceptually, A directory can be thought of as a file containing a series
+of entries, one entry per file contained in that directory.  However, these
+entries are not represented as simple text strings, and as a result we
+cannot use input routines such as <i>scanf</i> to process directories.
+Instead, we use system calls such as <b>opendir</b>, <b>readdir</b>, 
+<b>rewinddir</b>, and <b>closedir</b> to handle directories.
+<p/>
+Reading a directory consists of the following steps (see the man
+pages for further details):
+<p/>
+<ol>
+  <li>
+    Open the directory using the system call <b>opendir</b>.  This returns a
+    <i>directory stream</i>, which is of type
+    <blockquote>
+    <b><tt>DIR *</tt></b>
+    </blockquote>
+    and which will subsequently be used by other code to read and
+    process the contents of the directory.
+    Make sure you check the return value of <b><tt>opendir</tt></b> to 
+    determine whether the directory was opened successfully.
+    <p/>
+  </li>
+  <li>
+    Once a directory stream has been opened, the system call <b><tt>readdir</tt></b> can
+    be used to directory entries corresponding to individual files.  Each call
+    to <b><tt>readdir</tt></b> returns (a pointer to) information corresponding to a
+    single file in the directory; this is of type 
+    <blockquote>
+      <b><tt>struct dirent *</tt></b>
+    </blockquote>
+    (this is discussed below in more detail).  <b><tt>readdir</tt></b> does its own
+    bookkeeping internally and keeps track of how much of the directory it has
+    read (and, therefore, what the next entry is), so you don't have to update
+    the directory stream yourself in any way.
+    <p/>
+  </li>
+  <li>
+    If, at any point, we want to re-read the contents of the directory from the
+    beginning, this can be done using the system call <b><tt>rewinddir</tt></b>.
+    <p/>
+  </li>
+  <li>
+    At the end, when we are finished processing the directory, we can close the
+    directory stream using the system call <b><tt>closedir</tt></b>.
+    <p/>
+  </li>
+</ol>
+<p/>
+Your code might therefore look something like this:
+<blockquote>
+  <b><tt>
+      DIR *dir_ptr;<br/>
+      struct dirent *dirent_ptr;<br/>
+      ...<br/>
+      dir_ptr = opendir(</tt></b><i>filename</i><b><tt>);<br/>
+      ...<br/>
+      for ( ... ) {<br/>
+      &nbsp;&nbsp; dirent_ptr = readdir(dir_ptr);</tt></b><br/>
+      &nbsp;&nbsp; <i>... process</i><b><tt> dirent_ptr ... <br/>
+      }<br/>
+      ...<br/>
+      closedir(dir_ptr);<br/>
+  </tt></b>
+</blockquote>
+
+The second step above requires further explanation.  The structure of a
+directory entry is as follows (see <b><tt>man readdir</tt></b> or
+<b><tt>man dirent.h</tt></b>):
+
+<blockquote>
+<b><pre>
+struct  dirent {
+    ino_t          d_ino;       /* inode number */
+    off_t          d_off;       /* offset to the next dirent */
+    unsigned short d_reclen;    /* length of this record */
+    unsigned char  d_type;      /* type of file; not supported
+                                   by all file system types */
+    char           d_name[256]; /* filename */
+};
+</pre></b>
+</blockquote>
+
+Of these fields, the only one that is relevant for this assignment is
+<b><tt>d_name</tt></b>, which gives
+the name of the file corresponding to the directory entry.
+<p/>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>CSc 352 Spring 2016: Assignment 8</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<link href="../../style.css" rel="stylesheet" type="text/css"/>
+
+</head>
+<body bgcolor="white">
+<p>
+<img src="../../IMGS/uadcs.gif" alt="University of Arizona, Department of Computer Science"/>
+</p>
+
+<h1>CSc 352 (Spring 2016): Assignment 8</h1>
+<p/>
+<b>Start Date:</b> Thu March 24, 2016<br/>
+<b>Due Date:</b> 11:59 PM, Fri April 1, 2016
+<p/>
+The purpose of this assignment is to start working with command-line
+arguments and file I/O, and to continue working with pointers
+and dynamic memory allocation.
+<p/>
+<h2>General Requirements</h2>
+<ol>
+<li>
+Your C code should adhere to
+the <a href="../../DOCS/coding-standards.html" target="_blank">coding
+standards</a> for this class.  In particular, your programs should
+not give rise to any errors when run under Valgrind.
+<p/>
+</li>
+<li>
+Normal execution should be indicated via an exit status of <b>0</b>.
+If any errors are encountered during execution, this should be indicated
+via an exit status of <b>1</b>.
+<p/>
+</li>
+<li>
+  <a href="../misc/assume.html">This document</a> specifies what you can
+  assume without checking and what you should check.
+  <p/>
+</li>
+</ol>
+
+<h2>Submission Instructions</h2>
+
+Your solutions are to be turned in on the host <b>lectura.cs.arizona.edu</b>.
+Submit your solutions using the <b><tt>turnin</tt></b> command,
+using the assignment name appropriate to your section, as shown below:
+<p/>
+See <b><tt>man turnin</tt></b> for more information about the <b><tt>turnin</tt></b>
+command.
+<p/>
+
+<h3>Regular turnin</h3>
+
+<blockquote>
+    <b>Section 1</b>: &nbsp; 
+      <b><tt>turnin &nbsp; cs352s16-sec1-assg8</tt></b>  &nbsp; <i>files</i><br/>
+    <p/>
+    <b>Section 2</b>: &nbsp; 
+      <b><tt>turnin &nbsp; cs352s16-sec2-assg8</tt></b>   &nbsp; <i>files</i>
+    <p/>
+</blockquote>
+
+<h3>Extra-credit turnin</h3>
+
+<blockquote>
+    <b>Section 1</b>: &nbsp; 
+      <b><tt>turnin &nbsp; cs352s16-sec1-assg8xc</tt></b>  &nbsp; <i>files</i><br/>
+    <p/>
+    <b>Section 2</b>: &nbsp; 
+      <b><tt>turnin &nbsp; cs352s16-sec2-assg8xc</tt></b>   &nbsp; <i>files</i>
+    <p/>
+</blockquote>
+
+<h2>Problems</h2>
+<ol>
+  <li>
+    <a href="spellcheck.html" target="_blank">Spellcheck</a>
+    <p/>
+  </li>
+  <li>
+    <a href="myls.html" target="_blank">Myls</a>
+    <p/>
+  </li>
+  <li>
+    <a href="gdb-command.html" target="_blank">GDB Commands 2</a>
+    <p/>
+  </li>
+</ol>
+<p/>
+<h2>Extra Credit</h2>
+
+You can get up to 10% extra credit on each of the <b>spellcheck</b> and <b>myls</b> 
+problems by freeing all of the memory
+that was allocated dynamically (i.e., via <b>malloc</b>) during execution.  
+<p/>
+You can use Valgrind to determine whether you have freed all dynamically allocated
+memory.  If you have, Valgrind will print
+<p/>
+<blockquote>
+  <b><tt>
+      HEAP SUMMARY:<br/>
+      in use at exit: 0 bytes in 0 blocks<br/>
+      ...<br/>
+      All heap blocks were freed -- no leaks are possible</tt></b>
+</blockquote>
+<p/>
+In order to get the extra credit, your program must satisfy the following 
+two conditions for  <u>all</u> test inputs:
+<ol>
+  <li>
+    all dynamically allocated memory is freed; and
+  </li>
+  <li>
+    there are no memory errors.
+  </li>
+</ol>
+<p/>
+Both these properties will be checked using Valgrind.
+<p/>
+You should submit your programs separately for extra credit, using a different
+turnin assignment name, as indicated above.  For each of these problems, your
+score will be the bigger of the score on your regular submission and (if 
+submitted) your extra-credit submission.
+<p/>
+The reason for setting up the extra credit separately is to protect you
+if, for any reason, there are any bugs in your memory-freeing code.
+This way, you can submit one
+set of files for &quot;regular&quot; credit and (possibly) a different set of
+files for extra credit; and you will still get credit for the
+&quot;regular&quot; submission even if there are problems in the
+extra-credit submission.  Of course, you are free to submit the same set
+of files for both the regular and the extra credit submission.
+<p/>
+<b>NOTE:</b>
+If you want your code to be submitted for extra credit, you <u>must</u>
+submit it as an extra-credit turnin.  
+<p/>
+For each of the two problems mentioned, your extra credit will be 10% of
+your score for the problem.  Thus, if you get 82 out of 100 for a problem
+and your extra credit submission meets the two requirements mentioned above,
+you will get an additional 8.2 points (10% of 82), for a total score of 90.2.
+
+<h2>Policy Reminder:</h2> 
+While we fully expect that students in this class have the
+highest ethical and moral standards, 
+we will be running plagiarism-detection software on student submissions
+as a routine measure.
+<p/>
+</body>
+</html>
+

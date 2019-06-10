@@ -1,0 +1,274 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>CSc 352: Spellcheck</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<link href="../../style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body bgcolor="white">
+<p>
+<img src="../../IMGS/uadcs.gif" alt="University of Arizona, Department of Computer Science"/>
+</p>
+
+<h1>CSc 352: Spellcheck</h1>
+
+This program aims to give you further experience in working
+with pointers and dynamic memory allocation, and get you started 
+with command-line arguments and file I/O.
+<p/>
+
+<h2>The Problem</h2>
+
+Write a C program that reads in a document, extracts words, and checks them for spelling
+errors against a dictionary, as specified below.
+<p/>
+<ul>
+  <li>
+    <b>Definitions:</b>
+    For the purposes of this problem, a <i><u>word</u></i> is defined to be any sequence of upper- and
+    lower-case letters.  The spell-check process is not case-sensitive, so the words &quot;aND&quot; 
+    and  &quot;and&quot; are considered to be the same.
+    <p/>
+  </li>
+  <li>
+    <b>Invocation:</b> Your program will be compiled to an executable named
+    <b>spellcheck</b> (see under <b>Makefile</b> below).  It will be invoked as follows:
+    <blockquote>
+      <b>spellcheck</b> &nbsp; <b>-d</b> <i>dictionaryFile</i> &nbsp; 
+      	[ <b>-u</b> ] &nbsp; 
+      	[ <b>-i</b> <i>inputFile</i> ]
+    </blockquote>
+    where square brackets around an argument indicate that the argument is optional:
+    <p/>
+    <ul>
+      <li>
+	<i>dictionaryFile</i> is the name of a file containing the dictionary, i.e.,
+	a list of the &quot;official&quot; correct spellings of words.
+      </li>
+      <li>
+	The (optional) command-line option &quot;<b>-u</b> &quot; indicates that spelling-error reports
+	should be <i>unique</i>, i.e., each misspelled word should be reported exactly once.  
+	If &quot;<b>-u</b>&quot; is not specified, each misspelled word is to be reported each time it is
+	encountered, regardless of whether or not it was reported earlier.
+      </li>
+      <li>
+        <i>inputFile</i> is the name of a file from which the input to be spell-checked is to be read.  
+        If no file is specified, input should be read from <b>stdin</b>.
+      </li>
+    </ul>
+    <p/>
+    The arguments may be specified in any order.  Thus, the following are all legal and have
+    equivalent behavior:
+    <blockquote>
+      <b><tt>spellcheck -d mydict -u -i foo.txt</tt></b><br/>
+      <b><tt>spellcheck -u -d mydict -i foo.txt</tt></b><br/>
+      <b><tt>spellcheck -i foo.txt -u -d mydict</tt></b><br/>
+      <b><tt>spellcheck -i foo.txt -d mydict -u</tt></b>
+    </blockquote>
+    <p/>
+  </li>
+  <li>
+    <b>File names:</b> For this problem, it is illegal for a file name 
+    (either the dictionary or, if specified, the input file) to begin with the
+    character <b><tt>'-'</tt></b>.
+    <p/>
+    The reason for this restriction is to make the meaning of command-line arguments
+    for this problem unambiguous.  For example, without this restriction, one could
+    imagine a scenario where the program is invoked as
+    <blockquote>
+      <b><tt>spellcheck  -d -i -i -d</tt></b>
+    </blockquote>
+    where the dictionary file is named &quot;<b><tt>-i</tt></b>&quot; and
+    the input file is named &quot;<b><tt>-d</tt></b>&quot;, which would be messy to
+    deal with properly.
+    <p/>
+  </li>
+  <li>
+    <b>Behavior:</b> 
+    Your program should read in the list of words from the dictionary specified.  It should then
+    read text from the input stream, discarding non-letter characters
+    (i.e., digits, whitespace, punctuation, etc) to form words.  For each such word, your code
+    should search the list of words read in from the dictionary.  If the input word is not found in
+    the dictionary, it should be printed out to <b>stdout</b> (unless &quot;<b>-u</b>&quot;
+    is specified and the same word was encountered earlier).
+    <p/>
+    Each misspelt word that is encountered in the input stream and which is to be printed
+    out should be printed on a line by itself using the statement
+    <blockquote>
+      <b><tt>printf(&quot;%s\n&quot;, word)</tt></b>
+    </blockquote>
+  </li>
+  <li>
+    <b>Dictionary:</b> A dictionary is simply a list of words.
+    An example (with about 45,000 words) is available <a href="WORDS">here</a>; 
+    a bigger example (with about 109,000 words) is available at
+    <a href="http://www-01.sil.org/linguistics/wordlists/english/">
+    http://www-01.sil.org/linguistics/wordlists/english/</a>.
+    <p/>
+  </li>
+  <li>
+    <b>Errors:</b> 
+    Error messages should be sensible and informative (use <b>perror</b> where necessary)
+    and should be sent to <b>stderr</b>.
+    <p/>
+    The following are all fatal errors and should cause the program
+    to exit immediately with exit status <b>1</b>.
+    <p/>
+    <ul>
+      <li>
+	The dictionary is not specified.
+      </li>
+      <li>
+	The dictionary cannot be opened for reading.
+      </li>
+      <li>
+	&quot;<b><tt>-i</tt></b>&quot; is specified but no input file name is given.
+      </li>
+      <li>
+	The dictionary and/or the input file (if specified) begins with the
+	letter <b><tt>'-'</tt></b>.  In other words,
+	the argument following &quot;<b><tt>-d</tt></b>&quot;
+	and/or &quot;<b><tt>-i</tt></b>&quot; begins with the letter <b><tt>'-'</tt></b>.
+      </li>
+      <li>
+        An input file is specified but this file cannot be opened for reading.
+      </li>
+      <li>
+        The command line arguments contain options other than
+	&quot;<b>-d</b>&quot;, &quot;<b>-i</b>&quot;,
+	or &quot;<b>-u</b>&quot;.
+      </li>
+      <li>
+	One or more command line option is repeated 
+	(e.g, &quot;<b>-d</b> <i>file1</i> <b>-d</b> <i>file2</i>).
+      </li>
+    </ul>
+    <p/>
+    </ul>
+  </li>
+</ul>
+
+<h2>Assumptions and Restrictions</h2>
+
+<ul>
+  <li>
+    <b>Assumptions:</b> You may assume that a word is at most 64
+    characters long, and that strings read by <b>scanf</b> are
+    at most 512 characters long.
+    <p/>
+  </li>
+  <li>
+     <b>Restrictions:</b> 
+     The point of this exercise is to work with
+     pointers and dynamic data structures.  You should use a dynamic data
+     structure, such as a linked list, to hold the words read in
+     from the dictionary (and, if &quot;<b>-u</b>&quot; is specified,
+     the misspelled words encountered).  Programs that use 
+     statically preallocated memory will not get credit.  You will also
+     not get credit for solutions that use <b>realloc</b> or which
+     simulate <b>realloc</b> by making repeated calls to <b>malloc</b> or
+     <b>calloc</b>.
+     <p/>
+  </li>
+</ul>
+
+<h2>Building and Testing Your Program</h2>
+
+<ul>
+  <li>
+    <b>Code coverage:</b> 
+    In addition to the source code for your program, you should submit
+    test cases that achieve at least 90% code coverage under <b>gcov</b>.
+    Code coverage tests will be done on code that
+    has been formatted using <b>indent &ndash;kr</b>.
+    <p/>
+    Writing code coverage tests for this problem has two wrinkles, both related to
+    the fact that the program's execution is no longer driven just by inputs
+    read from <b>stdin</b>.  First, the execution paths taken&ndash;and therefore
+    the code coverage obtained&ndash;will depend on the command line options specified.
+    Second, the program's execution will depend on the dictionary and/or input files
+    specified.
+    <p/>
+    To deal with these issue, submit your code coverage tests in a directory
+    <b>tests</b> as specified below.
+    <p/>
+    <ul>
+      <li>
+	The directory <b>tests</b> contains the files (both dictionaries and input
+	files) used by your coverage tests.  You can name these files whatever you like.
+      </li>
+      <li>
+	The directory <b>tests</b> contains a single file <b>runtests</b> that
+	contains a set of commands to run your spellcheck program, one command per line.
+	An example is shown <a href="example-runtests-spellcheck" target="_blank">here</a>.
+	Once you have created this file of commands, you can execute all of the
+	commands within this file using the command
+	<blockquote>
+	  <b><tt>sh  tests/runtests</tt></b>
+	</blockquote>
+	<b>Note:</b> Each command in the <b>tests/runtests</b> file should work when
+	executed in the directory containing the Makefile and the executable for
+	this program.
+	<p/>
+      </li>
+    </ul>
+    <p/>	
+  </li>
+  <li>
+    <b>Makefile:</b>
+    In addition to your source files, you should submit a make file
+    named <b>Makefile</b> that supports at least the following functionality:
+    <blockquote>
+      <dl>
+        <dt><b>make spellcheck</b></dt>
+        <dd>Compiles the C source code to create an executable named
+    	<b><tt>spellcheck</tt></b>.  The compiler options used should
+    	include <b><tt>-Wall</tt></b>.
+    	<p/>
+      </dd>
+      <dt><b>make coverage</b> (phony target)</dt>
+      <dd>
+        Compiles the source program with the <b>gcc</b> options needed
+        by the <b>gcov</b> tool, namely, 
+        &quot;<b><tt>-fprofile-arcs -ftest-coverage</tt></b>&quot;.
+        <p/>
+      </dd>
+      <dt><b>make clean</b> (phony target)</dt>
+      <dd>
+        Deletes all object files (<b><tt>*.o</tt></b>), if any, as well as the
+        executable <b><tt>spellcheck</tt></b> and files generated by <b>gcov</b>
+        (<b><tt>*.gcov, *.gcno, *.gcda</tt></b>).
+      </dd>
+      </dl>
+    </blockquote>
+    <p/>
+  </li>
+</ul>
+
+<h2>Submitting Your Assignment</h2>
+    Collect all of the files related to this assignment, as described below, into a
+    directory named <b>spellcheck</b> and use the <b><tt>turnin</tt></b> command to submit
+    this directory (this will cause all of the files in the directory to be submitted).
+    The directory <b>spellcheck</b> should contain:
+    <p/>
+    <ul>
+      <li>
+        the C source code for your program;
+      </li>
+      <li>
+    	A makefile, as described above; and
+      </li>
+      <li>
+    	a directory named <b>tests</b> that contains a command file and associated
+	dictionary and input files, for code coverage tests, as described above under 
+	<b>Building and Testing Your Program</b>.
+	<p/>
+      </li>
+    </ul>
+ <p/>
+
+</body>
+</html>
+

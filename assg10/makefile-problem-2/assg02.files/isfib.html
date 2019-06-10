@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>CSc 352: IsFib</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<link href="../../style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body bgcolor="white">
+
+<h1>CSc 352: isFib</h1>
+Write a program, in a file <b>isFib.c</b>, as specified below:
+<p/>
+<ul>
+  <li>
+    <b>Behavior:</b>
+    The program reads in a sequence of 0 or more positive integer
+    values from <b><tt>stdin</tt></b> until no more can be read in; and
+    for each value <i>N</i> so read, prints out &quot;<i>N</i> <b>is fib</b>&quot; 
+	 [use <b>printf</b>("%d is fib\n", n)]
+    if <i>N</i> is a Fibonacci number, and &quot;<i>N</i> <b>is not fib</b>&quot; 
+    [use <b>printf</b>("%d is not fib\n", n)]	
+    if it is not. Nothing else should be sent to stdout.
+    <p/>
+  </li>
+  <li>
+    <b>Input:</b>
+    The input is a sequence of positive integers.  These may or may not be
+    on the same line.  If you use 
+    <blockquote>
+      <b><tt>scanf(&quot;%d&quot;, ...)</tt></b>
+    </blockquote>
+    it shouldn't matter whether they are on the same line or not.
+    <p/>
+    You can provide input to your program in a couple of different ways:
+    <p/>
+    <ol>
+      <li>
+	put the input numbers in a file and use I/O redirection; or
+      </li>
+      <li>
+	type in the numbers from the keyboard.
+      </li>
+    </ol>
+    <p/>
+    In the latter case, use <b><tt>Ctrl-D</tt></b> to end the input stream
+    (not <b><tt>Ctrl-C</tt></b>).
+    <p/>
+  </li>
+  <li>
+    <b>Error Conditions:</b>
+    It is an error if the input contains any non-positive integers or any
+    non-integer values.
+    Non-positive values in the input should not produce any output
+    (but you should produce an error mesage on stderr).
+    If the input contains something that cannot be read as an
+    integer (i.e., <b><tt>scanf(&quot;%d&quot;, ...)</tt></b> is
+    unable to read anything), your program should exit.
+    <p/>
+    The exit status of your program should indicate whether or
+    not an error was encountered at any point during processing.
+    <p/>
+  </li>
+  <li>
+    <b>Algorithm:</b> The algorithm for this program should be as follows:
+    <blockquote>
+      <b>repeat</b><br/>
+      <ol>
+	<li>read a number from <b><tt>stdin</tt></b>;</li>
+	<li>if a number could be read, and the value read is positive:
+		print out whether or not it is a Fibonacci number;</li>
+      </ol>
+      <b>until</b> no more values can be read;
+    </blockquote>
+    <p/>
+  </li>
+  <li>
+    <b>Example:</b> Given the input sequence
+    <p/>
+    <blockquote>
+      1 &nbsp; 12 &nbsp; 4<br/>
+      13<br/>
+      34
+    </blockquote>
+    
+    the program should print out
+    
+    <blockquote>
+      1 is fib<br/>
+      12 is not fib<br/>
+      4 is not fib<br/>
+      13 is fib<br/>
+      34 is fib
+    </blockquote>
+    <p/>
+  </li>
+</ul>
+</body>
+</html>
+

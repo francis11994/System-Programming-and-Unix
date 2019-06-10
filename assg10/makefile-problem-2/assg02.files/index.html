@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<title>CSc 352 Spring 2013: Assignment 2</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+
+</head>
+
+<body>
+
+<div>
+
+<p><span>&nbsp;</span></p>
+
+<h1><span ><span >CSc</span></span><span> 352 (Spring 2016): Assignment 2</span></h1>
+
+<blockquote style='margin-top:5.0pt;margin-bottom:5.0pt'>
+
+<table>
+ <tr>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p>Start
+  Date:</p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p>Thur
+  Jan 28, 2016</p>
+  </td>
+ </tr>
+ <tr>
+  <td>
+  <p>Due
+  Date:<span></span></p>
+  </td>
+  <td>
+  <p ><span>11:59PM
+  Fri, Feb 5</span></p>
+  </td>
+ </tr>
+</table>
+
+</blockquote>
+
+<p><span>The purpose of this assignment is
+to get you started with writing some simple C programs, and in the process
+getting some experience with the preprocessor directive <b>#include</b>, the
+I/O routines <span><b>printf</b></span> and <span><b>scanf</b></span>,
+and some other library routines.</span></p>
+
+<p><span>For some of the problems below,
+you need to read in integer values from <span><b>stdin</b></span>.
+You’ve seen in class how you can use the library function <span><b>scanf</b></span></span><span>
+<b>(</b></span><b>)</b>
+to do this. Remember %d is the code to use in the format string to read a
+decimal (integer) number. (For example, <span><span>scanf</span></span><span>
+(</span>“%d”,<span>&num</span>);)</p>
+
+<h2><span>General Requirements</span></h2>
+
+<ol>
+ <li><span>Your
+     C code should adhere to the <a
+     href="../../DOCS/coding-standards.html"
+     target="_blank">coding standards</a> for this class. Points will be subtracted
+	 from your score if your code does not adhere to these standards.</span></li>
+ <li><span>Your
+     programs should indicate whether or not they executed without any problems
+     via their <i>exit status</i>, i.e., the value returned by the program when
+     it terminates: </span></li>
+</ol>
+
+<blockquote style='margin-top:5.0pt;margin-bottom:5.0pt'>
+
+<table>
+ <tr>
+  <td>
+  <p><b><span>Execution</span></b></p>
+  </td>
+  <td>
+  <p><b><span>Exit Status</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p><span>Normal,
+  no problems</span></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p><b><span>0</span></b><span></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td>
+  <p><span>Error
+  or problem encountered</span></p>
+  </td>
+  <td>
+  <p><b><span>1</span></b></p>
+  </td>
+ </tr>
+</table>
+
+</blockquote>
+
+<ol>
+ <li><span>Under
+     <i>bash</i> you can check the exit status of a command or program <span><b><i>cmd</i></b>
+	 </span> by typing the command &quot;<b>echo
+     $?</b>&quot; immediately after the execution of <b><i>cmd</i></b>. A
+     program can exit with status <i>n</i> by executing &quot;</span><tt><b><span>exit(</span></b></tt>
+	 <i><span>n</span></i><tt><b><span>)</span></b></tt><span>&quot; anywhere in the program, or by 
+	 having </span><tt><b><span>main()</span></b></tt><span> execute the statement &quot;</span>
+	 <tt><b><span>return(</span></b></tt><i><span>n</span></i><tt><b><span>)</span></b></tt>
+	 <span>&quot;. </span></li>
+</ol>
+
+<h2><span>Example Executables</span></h2>
+
+<p><span>Executable versions of the programs from the assignment are
+available at  <b>/home/cs352/spring16/Assignments/assg02/executables/</b>
+You can copy and run them to compare the results of your programs with the output
+from these solutions. Your output for normal inputs should match that from the solution
+executables exactly. The messages your programs send to stderr do not have to match the
+solution executables exactly, but should describe the error encountered. </span></p>
+
+<h2><span>Important Grading Notes</span></h2>
+
+<p><span>Be sure to name your files EXACTLY as specified on the page for each problem.
+(In this case isFib.c, sumSquares.c, and sumDigits.c) If you don't name the files correctly
+they won't get graded. Also, remember that Unix is case sensitive. "isfib.c" is NOT the same
+as "isFib.c"! Remember that your programs are required to compile without any warnings when you
+use the -Wall option in gcc. If you get warnings, fix them before you turn in your program.
+ Lastly, take advantage of the given executable solutions. Your output to stdout
+should match them exactly. DON'T add prompts like "Please enter a digit". This will cause your
+program to fail the test cases. If you have any questions what the output should be, run the 
+given executables.</p></span>
+
+<h2><span>Submission Instructions</span></h2>
+
+<p><span>Your solutions are to be turned in on the host <b>lectura.cs.arizona.edu</b>.
+Submit your solutions, using as many files as are necessary per the problem
+specifications below, using the command </span></p>
+
+<blockquote style='margin-top:5.0pt;margin-bottom:5.0pt'>
+
+<p><span><span><b><span>
+Section 1: <br />
+turnin</span></b></span></span><b><span> &nbsp;&nbsp; cs352sp16-sec1-assg2</span></b>
+<span> &nbsp; <i>files</i> </span>
+<br />
+<span><span><b><span>
+Section 2: <br />
+turnin</span></b></span></span><b><span> &nbsp;&nbsp; cs352sp16-sec2-assg2</span></b><span> &nbsp; 
+<i>files</i> </span>
+</p>
+
+</blockquote>
+
+<h2><span>Problems</span></h2>
+
+<ol>
+ <li><span><a
+     href="include-files.html"
+     target="_blank">Include files</a> </span></li>
+ <li><span><a
+     href="isfib.html"
+     target="_blank"><span>isFib</span></a> </span></li>
+ <li><span><a
+     href="sumSquares.html"
+     target="_blank">Sum of Squares</a> </span></li>
+ <li><span><a
+     href="sumDigits.html"
+     target="_blank">Sum the Digits</a> </span></li>
+</ol>
+
+</div>
+
+</body>
+
+</html>

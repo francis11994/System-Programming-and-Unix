@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>CSc 352: Sum the Digits</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<link href="../../style.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body bgcolor="white">
+
+
+<h1> 352: Sum the Digits</h1>
+
+<p ><span >This assignment you will write a program to input some integers and for each one
+calculate the sum of its digits. For example, given 8762 you would calculate 8 + 7 + 6 + 2 = 23
+ </span></p>
+
+
+
+<p><span >Write a program, in a file <span><b>sumDigits.c</b></span>, that behaves as specified below. </span></p>
+
+<ul>
+ <li ><b><span >Input:</span></b><span> The input is a sequence of positive integers. These numbers may or
+     may not be on the same line. </span></li>
+ <li><b><span>Behavior:</span></b><span> Your program should read in the input numbers, 
+ and for each number n calculate
+     the sum of its defined above. Your program should print out each of these sums
+on a separate line using the command	 </span></li>
+
+
+<blockquote style='margin-top:5.0pt;margin-bottom:5.0pt'>
+<tt>printf("%d\n", num);</tt>
+
+
+
+</blockquote>
+
+
+where num is the sum of digits calculated. Nothing else should be sent to stdin!
+</ul>
+<ul>
+ <li><b><span>Error
+     Conditions:</span></b><span > It is an error if the input contains any
+     non-positive integers or any non-integer values. Non-positive values in
+     the input should not produce any output to <b>stdout</b>,
+     but anytime an error is encountered a message should be sent to 
+     <b>stderr</b>. A non-positive input should not cause the program to exit.
+     If the input contains something
+     that cannot be read as an integer (i.e., </span><span><tt><b><span>(</span></b></tt></span><tt><b><span>
+	 &quot;%d&quot;, ...)</span></b></tt><span> is unable to read anything), 
+	 your program should print an error to <span>stderr</span> and exit.</span></li>
+</ul>
+
+<p style='margin-left:.5in'><span>The exit
+status of your program should indicate whether or not an error was encountered
+at any point during processing. </span></p>
+
+<ul>
+ <li><b><span>Comments:</span></b><span> This is a straightforward problem of reading in numbers 
+ and calculating the digits of each one (and then summing those digits)
+     by performing a series of arithmetic
+     operations on it. Your solution should <u>not</u> use strings or arrays.
+     </span></li>
+</ul>
+
+</body>
+
+</html>

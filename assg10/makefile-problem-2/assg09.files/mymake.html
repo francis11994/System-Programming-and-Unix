@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>CSc 352: mymake</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<link href="../../style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body bgcolor="white">
+<p>
+<img src="../../IMGS/uadcs.gif" alt="University of Arizona, Department of Computer Science"/>
+</p>
+
+<h1>CSc 352: mymake</h1>
+
+This program aims to give you further experience in working
+with pointers and dynamic memory allocation, and get you started 
+with command-line arguments and file I/O.
+<p/>
+
+<h2>The Problem</h2>
+
+This problem involves writing a C program that implements part the core
+    functionality of the <i>make</i> utility.  This assignment involves
+    reading in a file specifying dependencies and rules as in <i>make</i>
+    (though with a different and more explicit syntax);
+    constructing a dependency tree; and then traversing the tree starting
+    with some specified target.  The extension to actually check timestamps
+    and execute the associated commands where necessary will be part of a future
+    assignment.
+<p/>
+<ul>
+  <li>
+    <b>Invocation:</b> Your program will be compiled to an executable named
+    <b>mymake</b> (see under <b>Makefile</b> below).  It will be invoked as follows:
+    <blockquote>
+      <b>makefile</b> &nbsp; <i>aMakeFile</i> &nbsp; <i>aTarget</i>
+    </blockquote>
+    <i>aMakeFile</i> is is a file specifying dependencies and
+	rules according to the format given
+	<a href="mymake-spec.html">here</a>; and <i>aTarget</i> is the
+	name of a target appearing in <i>aMakeFile</i>.
+    <p/>
+  </li>
+  <li>
+    <b>Behavior:</b> 
+An invocation &quot;<b><tt>mymake</tt></b> <i>aMakeFile</i>
+	<i>aTarget</i>&quot; of your program should behave as follows:
+	(i)
+	    read in the targets and dependencies specified in
+	    <i>aMakeFile</i> and construct the corresponding
+	    <a href="dependency-graph.html#structure">data dependency graph</a>;
+	(ii) traverse this graph using a <i>postorder traversal</i>,
+	    starting at the node corresponding to the target <i>aTarget</i>,
+	    as specified <a href="dependency-graph.html#post-order">here</a>.
+	    (The
+	    	Wikipedia <a href="http://en.wikipedia.org/wiki/Tree_traversal">discusses</a>
+			the general notion of tree traversals, including
+	    postorder traversals, in more detail.)
+            <p/>
+	    <b><u>Important</u>:</b> Your program should free all
+	    dynamically allocated memory before exiting.
+  </li>
+  <li>
+	<b>Files:</b> You should structure your program so that
+	conceptually distinct pieces of the program reside in distinct
+	files.  For instance, the code for reading the makefile specifications
+	might be in a different file from the fuctions dealing with graphs. (for example, 
+	finding a node, adding a node, traversing the graph, etc.) You should include at
+	least 2 different files of source code and one header file. You can include more if
+	you feel so inclined. <p />
+  <li>
+	<b>Output:</b> The output produced by your program is a sequence of
+	node names obtained from the postorder traversal of the dependency graph;
+	an example is given <a href="dependency-graph.html#post-order">here</a>.
+	<p/>
+  </li>
+  <li>
+    <b>Errors:</b> 
+    Error messages should be sensible and informative (use <b>perror</b> where necessary)
+    and should be sent to <b>stderr</b>.
+    <p/>
+    The following are all fatal errors and should cause the program
+    to exit immediately with exit status <b>1</b>.
+    <p/>
+    <ul>
+      <li>
+	    An input file or a target is not specified.
+      </li>
+      <li>
+	    Too many arguments are specified.
+      </li>
+      <li>
+	    The input file cannot be opened for reading.
+      </li>
+      <li>
+	    The input file is in an illegal format (meaning it doesn't follow the spec
+	    given <a href="mymake-spec.html">here</a>).
+      </li>
+      <li>
+        The specified target is not defined in the input file.
+      </li>
+     </ul>
+    <p/>
+    </ul>
+  </li>
+</ul>
+
+<h2>Assumptions and Restrictions</h2>
+
+<ul>
+  <li>
+    <b>Assumptions:</b> You may assume that a <i>word</i> in the
+	input mymake file has length at most 64.
+    <p/>
+  </li>
+  <li>
+     <b>Restrictions:</b> 
+     The point of this exercise is to work with
+     pointers and dynamic data structures.  Programs that use 
+     statically preallocated memory will not get credit.  You will also
+     not get credit for solutions that use <b>realloc</b> or which
+     simulate <b>realloc</b> by making repeated calls to <b>malloc</b> or
+     <b>calloc</b>.
+     <p/>
+  </li>
+</ul>
+
+<h2>Building and Testing Your Program</h2>
+
+<ul>
+  <li>
+    <b>Code coverage:</b> 
+    In addition to the source code for your program, you should submit
+    test cases that achieve at least 90% code coverage under <b>gcov</b>.
+    Code coverage tests will be done on code that
+    has been formatted using <b>indent &ndash;kr</b>.
+    <p/>
+    As in the last assignment, the input for this program does not just come from standard in.
+	Thus your tests need input files, but also the correct arguments to call the program. We
+	will deal with this the same way as was done before. Namely:
+    
+    <p/>
+    <ul>
+      <li>
+	The directory <b>tests</b> contains the inpute files used by your coverage tests.  
+	You can name these files whatever you like.
+      </li>
+      <li>
+	The directory <b>tests</b> also contains a file <b>runtests</b> that
+	contains a set of commands to run your mymake program, one command per line.
+	An example is shown <a href="example-runtests-mymake" target="_blank">here</a>.
+	Once you have created this file of commands, you can execute all of the
+	commands within this file using the command
+	<blockquote>
+	  <b><tt>sh  tests/runtests</tt></b>
+	</blockquote>
+	<b>Note:</b> Each command in the <b>tests/runtests</b> file should work when
+	executed in the directory containing the Makefile and the executable for
+	this program.
+	<p/>
+      </li>
+    </ul>
+    <p/>	
+  </li>
+  <li>
+    <b>Makefile:</b>
+    In addition to your source files, you should submit a make file
+    named <b>Makefile</b> that supports at least the following functionality:
+    <blockquote>
+      <dl>
+        <dt><b>make mymake</b></dt>
+        <dd>Compiles the C source code to create an executable named
+    	<b><tt>mymake</tt></b>.  The compiler options used should
+    	include <b><tt>-Wall</tt></b>.
+    	<p/>
+      </dd>
+      <dt><b>make coverage</b> (phony target)</dt>
+      <dd>
+        Compiles the source program with the <b>gcc</b> options needed
+        by the <b>gcov</b> tool, namely, 
+        &quot;<b><tt>-fprofile-arcs -ftest-coverage</tt></b>&quot;.
+        <p/> 
+      </dd>
+      <dt><b>make clean</b> (phony target)</dt>
+      <dd>
+        Deletes all object files (<b><tt>*.o</tt></b>), if any, as well as the
+        executable <b><tt>mymake</tt></b> and files generated by <b>gcov</b>
+        (<b><tt>*.gcov, *.gcno, *.gcda</tt></b>).
+      </dd>
+      </dl>
+    </blockquote>
+    <p/>
+	<font color = "red">
+	<b>New requirements:</b> Your makefile should also use macros to specify the compiler flags
+	and should use pattern rules like those given in the slide titled 
+	<em><b>Telling make how to process 	files</b></em>
+	from the lecture notes on make. In other words, there should be only one command in the
+	makefile to build all your object files.
+	</font>
+  </li>
+</ul>
+
+<h2>Submitting Your Assignment</h2>
+    Collect all of the files related to this assignment, as described below, into a
+    directory named <b>mymake</b> and use the <b><tt>turnin</tt></b> command to submit
+    this directory (this will cause all of the files in the directory to be submitted).
+    The directory <b>mymake</b> should contain:
+    <p/>
+    <ul>
+      <li>
+        the C source code for your program;
+      </li>
+      <li>
+    	A makefile, as described above; and
+      </li>
+      <li>
+    	a directory named <b>tests</b> that contains a command file and associated
+	dictionary and input files, for code coverage tests, as described above under 
+	<b>Building and Testing Your Program</b>.
+	<p/>
+      </li>
+    </ul>
+ <p/>
+
+</body>
+</html>
+

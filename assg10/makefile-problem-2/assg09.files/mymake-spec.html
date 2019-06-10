@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>CSc 352 Spring 2016: Assignment 9 (mymake Specification)</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+
+</head>
+<body bgcolor="white">
+<p>
+<img src="../../IMGS/uadcs.gif" alt="University of Arizona, Department of Computer Science"/>
+</p>
+
+<h1>CSc 352 (Spring 2016): Assignment 9 (mymake Specification)</h1>
+
+<p/>
+<h2>Terminology</h2>
+
+<p/>
+<ul>
+  <li>
+  A <i><u>graphical character</u></i> is a non-whitespace printable character,
+  i.e.,  a character for which the function <b>isgraph()</b>
+  returns a non-zero value.
+  <p/>
+  </li>
+  <li>
+  A <i><u>whitespace
+  character</u></i> is any character for which the function
+  <b>isspace()</b> returns a non-zero value, e.g., blanks, tabs, newlines.
+  <p/>
+  </li>
+  <li>
+  A <i><u>word</u></i>  is a nonempty sequence of graphical
+  characters that does not begin with the character
+  &quot;<b><tt>@</tt></b>&quot;.
+  </li>
+</ul>
+
+<p/>
+<h2>File Structure</h2>
+
+A &quot;mymake file&quot; consists of a sequence of <i>rules</i>.
+These have the structure specified below.
+
+<p/>
+<h2>1. Rules</h2>
+
+A rule consists of a single <i>target specification</i> followed by a single
+<i>command</i>.  These have the structure specified below.
+<p/>
+<h3>1.1. Target Specification</h3>
+<p/>
+A target specification is of the form
+<p/>
+  <blockquote>
+  <b><tt>@target</tt></b> <i>str</i><sub>1</sub> <b><tt>:</tt></b>
+  	&nbsp; <i>str</i><sub>2</sub> 
+  	&nbsp; <i>str</i><sub>3</sub> 
+  	&nbsp; <b><tt>...</tt></b>
+  	&nbsp; <i>str</i><sub><i>n</i></sub>
+  </blockquote>
+<p/>
+where:
+ <i>n</i> &gt; 0, and
+  each of the <i>str<sub>i</sub></i> is a word that is preceded and followed
+  by one or more whitespace characters.
+ <p/>
+ In this case, the word &quot;<i>str</i><sub>1</sub>&quot; is said to be the
+ <i><u>target</u></i> for the rule.  <b><u>Important</u></b>: A word
+ cannot appear as the target for more than one rule.
+<p/>
+
+<h3>1.2. Commands</h3>
+<p/>
+A command is of the form
+<blockquote>
+<b><tt>@cmd</tt></b> <i>str</i><sub>1</sub> 
+	&nbsp; <i>str</i><sub>2</sub> 
+	&nbsp; <b><tt>...</tt></b>
+	&nbsp; <i>str</i><sub><i>n</i></sub>
+</blockquote>
+<p/>
+where:
+ <i>n</i> &gt; 0, and
+  each of the <i>str<sub>i</sub></i> is a word that is preceded and followed
+  by one or more whitespace characters.
+ <p/>
+ The sequence of words <i>str</i><sub>1</sub> 
+	&nbsp; <i>str</i><sub>2</sub> 
+	&nbsp; <b><tt>...</tt></b>
+	&nbsp; <i>str</i><sub><i>n</i></sub> is called the
+ <i><u>command</u></i> for the rule.
+<p/>
+
+<h2>2. Examples</h2>
+
+The following are examples of mymake files:
+
+<blockquote>
+  <b>Example 1:</b>
+  The following is legal:
+  
+  <blockquote>
+  <b><tt>
+    @target spellcheck.o : utils.h &nbsp; spellcheck.h &nbsp; spellcheck.c<br/>
+    @cmd gcc -Wall -c spellcheck.c<br/>
+    <br/>
+    @target hash.o : hash.c utils.h hash.h<br/>
+    @cmd gcc -Wall hash.c<br/>
+    <br/>    
+    @target spellcheck : hash.o spellcheck.o<br/>
+    @cmd gcc *.o -o spellcheck    
+  </tt></b>
+  </blockquote>
+  <p/>
+
+  <b>Example 2:</b>
+  The following is legal.  It represents the same set of targets and
+  commands as in Example 1 except for weird placement of whitespace and line-breaks.
+  
+  <blockquote>
+  <b><tt>
+    @target spellcheck.o : utils.h<br/>&nbsp; spellcheck.h<br/> &nbsp; spellcheck.c<br/>
+    @cmd gcc -Wall <br/>&nbsp; -c
+    <br/>
+    <br/>
+    spellcheck.c
+    @target hash.o <br/>
+    : hash.c utils.h hash.h &nbsp; @cmd<br/>
+    &nbsp; gcc <br/>
+    &nbsp; &nbsp; -Wall<br/> hash.c &nbsp; @target &nbsp; spellcheck :
+    	hash.o spellcheck.o @cmd gcc<br/>
+    &nbsp; *.o -o<br/>
+    spellcheck    
+  </tt></b>
+  </blockquote>
+  <p/>
+
+  <b>Example 3:</b>
+  The following is legal even though it looks like there is no whitespace after
+  &quot;<b><tt>foo.h</tt></b>&quot; on the first line.
+  In fact, the string &quot;<b><tt>foo.h@cmd</tt></b>&quot; is a 
+  word according
+  to the definition above, so this is OK.  
+  <blockquote>
+  <b><tt>
+    @target spellcheck.o : utils.h &nbsp; spellcheck.h &nbsp;
+        foo.h@cmd gcc -Wall -c spellcheck.c @cmd bash foo.h
+  </tt></b>
+  </blockquote>
+
+  In terms of dependencies, it is equivalent to the following:
+  
+  <blockquote>
+    <b><tt>
+	@target spellcheck.o : utils.h &nbsp; spellcheck.h &nbsp;
+        foo.h@cmd gcc -Wall -c spellcheck.c <br/>
+	@cmd bash foo.h
+  </tt></b>
+  </blockquote>
+
+
+  <p/>
+
+  <b>Example 4:</b>
+  The following is illegal.  Reason: there is no whitespace after
+  &quot;<b><tt>spellcheck.o</tt></b>&quot; on the first line:
+
+  <blockquote>
+  <b><tt>
+    @target spellcheck.o: utils.h &nbsp; spellcheck.h &nbsp; spellcheck.c<br/>
+    @cmd gcc -Wall -c spellcheck.c<br/>
+  </tt></b>
+  </blockquote>
+  <p/>
+
+  <b>Example 5:</b>
+  The following is illegal.  Reason: The string
+  &quot;<b><tt>@spellcheck.h</tt></b>&quot;, on the first line, is not a word.
+
+  <blockquote>
+  <b><tt>
+    @target spellcheck.o: utils.h &nbsp; @spellcheck.h &nbsp; spellcheck.c<br/>
+    @cmd gcc -Wall -c spellcheck.c<br/>
+  </tt></b>
+  </blockquote>
+  <p/>
+
+  <b>Example 6:</b>
+  The following is illegal.  Reason: The specification above requires
+  the &quot;<b><tt>@cmd</tt></b>&quot; to be followed by at least one word.
+
+  <blockquote>
+  <b><tt>
+    @target spellcheck.o: utils.h &nbsp; spellcheck.h &nbsp; spellcheck.c<br/>
+    @cmd<br/>
+  </tt></b>
+  </blockquote>
+  <p/>
+
+
+
+</blockquote>
+
+
+</body>
+</html>

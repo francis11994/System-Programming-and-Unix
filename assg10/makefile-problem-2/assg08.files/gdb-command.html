@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>CSc 352: GDB Commands 2</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<link href="../../style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body bgcolor="white">
+<p>
+<img src="../../IMGS/uadcs.gif" alt="University of Arizona, Department of Computer Science"/>
+</p>
+
+<h1>CSc 352: GDB Commands 2</h1>
+
+  This problem is intended to introduce you to a very useful feature of GDB:
+  namely, <i>conditional breakpoints</i>.
+  <p/>
+  The program <a href="somepgm.c" target="_blank">somepgm.c</a> does some weird and 
+  complicated math that sometimes produces unexpected results.  For example, if we 
+  compile this program to an executable file <b>a.out</b> and run it using the command
+  <blockquote>
+    <b>a.out &nbsp; 1000</b>
+  </blockquote>
+  the value of the variable <b><tt>i</tt></b> in the function <b><tt>foo()</tt></b>
+  sometimes becomes negative, which&mdash;just from looking at the code&mdash;is
+  odd.  Unfortunately, this unusual behavior only happens after a lot of iterations
+  of the <b><tt>while</tt></b> loop in this code, which makes debugging using 
+  &quot;regular&quot; breakpoints tedious and time-consuming.
+  <p/>
+  This problem requires you to use <i>conditional breakpoints</i> in <b>gdb</b> to
+  cause the breakpoint to stop execution only when <b><tt>i</tt></b> is negative.
+  To this end, you should read the section on <b>Conditional breakpoints</b> in this
+  <a href="http://www.cs.cmu.edu/~gilpin/tutorial/">GDB Tutorial</a> and experiment
+  with setting conditional breakpoints in programs, i.e., where the breakpoint is
+  only triggered when some particular condition becomes true.
+  <p/>
+  Once you understand how conditional breakpoints are set, you should
+  create a GDB command script file <b>gdbcmds.txt</b> containing a sequence of 
+  commands to be read in and executed by GDB (using <b>gdb -x</b>) as specified below: 
+  <p/>
+  <ul>
+    <li>
+      <b>Behavior:</b>
+      Your GDB command script should carry out the following on an 
+      appropriately-compiled executable <b>a.out</b> of the file 
+      <a href="somepgm.c" target="_blank">somepgm.c</a>:
+      <p/>
+      <ol>
+        <li>
+          Set a conditional breakpoint at <b>line 9</b> of 
+          <a href="somepgm.c" target="_blank">somepgm.c</a> such that the breakpoint is triggered
+          (i.e., execution stops) if the value of the variable <b><tt>i</tt></b>
+          is negative.
+          <p/>
+        </li>
+	<li>
+	  Run the program with the command-line argument <b>1000</b>.
+	  <p/>
+	</li>
+	<li>
+	  When the program stops at the breakpoint you set,
+	  use GDB's <b>print</b> command to print out the value of the
+	  variable <b><tt>y</tt></b>.
+	  <p/>
+	</li>
+	<li>
+	  Exit <b>gdb</b>.
+	  <p/>
+	  <b>Note:</b> When you give <b>gdb</b> a &quot;<b>quit</b>&quot; command,
+	  <b>gdb</b> normally asks you to confirm that you want to quit.  You can 
+	  skip the confirmation step by adding the following line to
+	  the beginning of the <b>gdbcmds.txt</b> file:
+	  <blockquote>
+	    <b><tt>set confirm off</tt></b>
+	  </blockquote>
+	  <p/>
+	</li>
+      </ol>
+      <p/>
+    </li>
+    <li>
+      <b>Files to be submitted:</b> Turn in the GDB command script <b>gdbcmds.txt</b>.
+      <p/>
+    </li>
+  </ul>
+</body>
+</html>
+

@@ -1,0 +1,3 @@
+./spellcheck -d tests/mydict1 -i tests/infile3
+./spellcheck -d tests/mydict2 -u < tests/infile2
+

@@ -1,0 +1,20 @@
+
+./mymake a						
+./mymake a a a
+./mymake a a
+./mymake ./tests/myfile1 a		>> 01.out
+./mymake ./tests/myfile2 a	> 02.out
+./mymake ./tests/myfile3 a	>03.out
+./mymake ./tests/myfile4 a	>04.out
+./mymake ./tests/myfile5 a	>05.out
+./mymake ./tests/myfile6 a	>06.out
+./mymake ./tests/myfile7 a	>07.out	
+./mymake ./tests/myfile8 a	>08.out
+./mymake ./tests/myfile9 a	
+./mymake ./tests/myfile10 a	
+./mymake ./tests/myfile11 a	
+./mymake ./tests/myfile12 a	
+./mymake ./tests/myfile at	
+./mymake ./tests/myfile a	
+
+

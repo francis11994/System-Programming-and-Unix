@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<title>CSc 352: Include Files</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+
+</head>
+<body>
+
+<div>
+
+<p><span>&nbsp;</span></p>
+
+<h1><span><span>CSc</span></span><span> 352: Include Files</span></h1>
+
+<p><span>The program <a
+href="silly.c" target="_blank"><span>silly.c</span></a> (this progrm can also be found on lecture in
+the directory <b> /home/cs352/spring16/Assignments/assg02/ </b>) has had all of its </span><tt><b>
+<span>#include</span></b></tt><span> directives mysteriously deleted; as a result, the program no longer
+compiles. You are to figure out which files you need to include, add the
+appropriate </span><tt><b><span>#include</span></b></tt>
+<span> directives to the file so that it compiles without any
+warnings or errors using &quot;</span><span><tt><b><span>gcc</span></b></tt></span><tt><b>
+<span> -Wall</span></b></tt><span>&quot;, and turn in the file so modified. The order in which the
+include-files are listed in the file you turn in is unimportant. </span></p>
+
+<p><b><span>Important:</span></b><span> Do not include more files than necessary.
+Do not change the name of the file. </span></p>
+
+<p><b><span>Comment:</span></b><span> You don’t need to know what this silly
+program does, you just need to make it compile without warnings or errors. The
+missing include-files cause the compiler to generate syntax errors.
+Symbols (e.g., </span><tt><b><span>NULL</span></b></tt><span> 
+) used in the program are specified in the
+missing include-files — without them, we get syntax errors. To fix the problem,
+start with the library functions in the program, figure out what the relevant
+include-files are, and add the appropriate </span><tt><b><span>#include</span></b></tt>
+<span> directives; this will usually take care
+of defining associated symbols.
+If you aren't sure whether something is
+the name of a library function, use </span><tt><b><span>man</span></b></tt>
+<span> (in some cases you may have to specify the
+section 3). </span></p>
+<p>Once again, you do not have to understand or run the program. You just have to get it to compile without
+warnings or errors by adding the minimual number of #include directives. If you DO want to run it you should
+know that you need to type the command followed by an integer greater than 1. If you run it without this
+integer it will rudely Abort. This is not an error. This is bad program design. Here's an example of how
+to run the program if you want to:
+</p>
+<p>
+gcc -Wall silly.c <br />
+./a.out 34
+</p>
+
+</div>
+
+</body>
+
+</html>

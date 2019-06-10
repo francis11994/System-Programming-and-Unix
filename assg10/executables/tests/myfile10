@@ -1,0 +1,3 @@
+@target a : a b c
+@cmd a
+

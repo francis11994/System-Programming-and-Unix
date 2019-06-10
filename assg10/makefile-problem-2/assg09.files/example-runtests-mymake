@@ -1,0 +1,3 @@
+./mymake tests/mfile1 target1
+./myls tests/mfile1 target2
+./myls tests/mfile2 

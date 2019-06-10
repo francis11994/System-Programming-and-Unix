@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>CSc 352: Getline</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<link href="../../style.css" rel="stylesheet" type="text/css"/>
+
+</head>
+<body bgcolor="white">
+
+<h1>CSc 352: Using <tt>getline()</tt></h1>
+
+<b><tt><a href="http://linux.about.com/library/cmd/blcmdl3_getline.htm" target="_blank">getline()</a></tt></b>
+is a C library routine for reading lines from input streams:
+<blockquote>
+<b><tt>
+    #define _GNU_SOURCE<br/>
+    #include &lt;stdio.h&gt;<br/>
+    ssize_t getline(char **lineptr, size_t *n, FILE *stream);
+</tt></b>
+</blockquote>
+It takes three
+arguments:
+<p/>
+<ol>
+  <li>
+    <b><tt>lineptr</tt></b> : a pointer to a location that points 
+    to a <b><tt>char</tt></b> (string);
+  </li>
+  <li>
+    <b><tt>n</tt></b> : a pointer to an <b><tt>int</tt></b> variable; and
+  </li>
+  <li>
+    <b><tt>stream</tt></b> : an input stream, which for our current purposes
+    will be <b><tt>stdio</tt></b>.
+  </li>
+</ol>
+<p/>
+To use <b><tt>getline()</tt></b> to read from <b><tt>stdin</tt></b>, you
+need two variables: 
+<blockquote>
+  <b><tt>char *line;<br/>
+         size_t len;</tt></b>
+</blockquote>
+When you call <b><tt>getline()</tt></b>, you pass it <u>a pointer to
+<b><tt>line</tt></b></u> (first argument) and <u>a pointer to 
+<b><tt>len</tt></b></u> (second argument); the third argument
+(the input stream) is <b><tt>stdin</tt></b>.
+<p/>
+When a line is read in, it needs to be stored somewhere, which means
+space has to be allocated for it.  This can be done in one of two ways:
+<p/>
+<ul>
+  <li>You can allocate the buffer yourself: 
+    call <b><tt>malloc()</tt></b> with the appropriate buffer size, and
+    assign the pointer you get back to the variable <b><tt>line</tt></b>.
+    In this case, the size of the buffer has to be passed to 
+    <b><tt>getline()</tt></b> as well&mdash;this is done by assigning the
+    size to the variable <b><tt>len</tt></b> and passing 
+    <u>a pointer to <b><tt>len</tt></b></u> as the second argument.
+    <p/>
+    If the input line fits into the buffer you allocated
+    (i.e., the length of the input line is less than the value of
+    <b><tt>len</tt></b>), <b><tt>getline()</tt></b> reads the line into the
+    buffer pointed at by <b><tt>line</tt></b>; otherwise it allocates
+    a larger buffer, modifies <b><tt>line</tt></b> to point to this new
+    buffer, and updates <b><tt>len</tt></b> with the length of the new
+    buffer.  (It is to make these updates possible that you pass
+    <em>pointers</em> to <b><tt>line</tt></b> and <b><tt>len</tt></b>
+    rather than just those variables themselves.)
+  </li>
+  <li>
+    You can let <b><tt>getline()</tt></b> allocate the line for you.
+    In this case you should initialize the variable <b><tt>line</tt></b>
+    to <b><tt>NULL</tt></b> before calling <b><tt>getline()</tt></b>.
+    <b><tt>getline()</tt></b> ignores its second argument if its first
+    argument is <b><tt>NULL</tt></b>, so the value of <b><tt>len</tt></b>
+    does not matter.
+    <p/>
+    In this case, <b><tt>getline()</tt></b> allocates a buffer of appropriate
+    size; reads the input line into this buffer; and updates
+    <b><tt>line</tt></b> to point to this buffer and sets <b><tt>len</tt></b>
+    to the length of the buffer.
+    <p/>
+  </li>
+</ul>
+<p/>
+In either case, after a successful call to <b><tt>getline()</tt></b> the
+variable <b><tt>line</tt></b> points to the line that was read in while
+<b><tt>len</tt></b> is set to its length.  If the input line ends in a
+newline character (<b><tt>&#39;\n&#39;</tt></b>), the newline character
+is retained in the buffer.
+<p/>
+The value returned by <b><tt>getline()</tt></b> is:
+  <ul>
+    <li>If a line was successfully read in: the number of characters
+	read in, including the newline character at the end (if one is present) but
+	not including the terminal <b><tt>NUL</tt></b> byte.
+    </li>
+    <li>
+      If nothing could be read in (including an end-of-file condition):
+      <b><tt>-1</tt></b>.
+    </li>
+  </ul>
+<p/>
+A small example illustrating the use of <b><tt>getline()</tt></b> is 
+available <a href="getline-example.c">here</a>.
+
+
+</body>
+</html>
+

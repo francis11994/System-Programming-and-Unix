@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>CSc 352 Spring 2010: Assignment 9 (Dependency Graphs)</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+
+</head>
+<body bgcolor="white">
+<p>
+<img src="../../IMGS/uadcs.gif" alt="University of Arizona, Department of Computer Science"/>
+</p>
+
+<h1>CSc 352 (Spring 2010): Assignment 9 (Dependency Graphs)</h1>
+
+<p/>
+A <i><u>dependency graph</u></i> is a data structure that captures
+the dependencies between different files as specified in a make file.
+To keep this discussion specific, we will focus here on rules
+in <a href="mymake-spec.html">mymake format</a>; however, the 
+concepts are not specific to this assignment and generalize readily to
+the full <b>make</b> utility.
+
+<a name="structure"/>
+<h2>1. Structure</h2>
+
+<p/>
+A dependency graph is a <i>directed graph</i> satisfying the following:
+<p/>
+<ol>
+  <li>
+    Each node represents a <i><u>target</u></i> in the input mymake file.
+    Thus, for each rule of the form
+    <blockquote>
+      <b><tt>@target</tt></b> <i>A</i> <b><tt>: ...</tt></b><br/>
+      <b><tt>@cmd ...</tt></b>
+    </blockquote>
+    there is a node named <i>A</i> in the dependency graph.
+    <p/>
+  </li>
+  <li>
+    There is an edge from node <i>A</i>
+    to node <i>B</i> if <i>A</i> &quot;<i><u>depends on</u></i>&quot; <i>B</i>,
+    i.e., if the input file contains a rule of the form
+    <blockquote>
+    <b><tt>@target</tt></b> <i>A</i> <b><tt> :  ... </tt></b> <i>B</i>
+	<b><tt>  ... </tt></b><br/>
+        <b><tt>@cmd ...</tt></b>
+    </blockquote> 
+  </li>
+</ol>
+<p/>
+The sequence of words comprising the
+<i><u>command</u></i> for a rule (see the <a href="mymake-spec.html">mymake spec</a>)
+is associated with the dependency graph node for the target for the rule.
+<p/>
+The following example illustrates the notion of dependency graphs.  Conciser
+the following mymake file (this is <b>Example 1</b> in
+the <a href="mymake-spec.html">mymake spec</a>):
+
+  <blockquote>
+  <b><tt>
+    @target spellcheck.o : utils.h &nbsp; spellcheck.h &nbsp; spellcheck.c<br/>
+    @cmd gcc -Wall -c spellcheck.c<br/>
+    <br/>
+    @target hash.o : hash.c utils.h hash.h<br/>
+    @cmd gcc -Wall hash.c<br/>
+    <br/>    
+    @target spellcheck : hash.o spellcheck.o<br/>
+    @cmd gcc *.o -o spellcheck    
+  </tt></b>
+  </blockquote>
+
+The corresponding dependency graph is as follows:
+
+<p/>
+<center>
+<img src="data-dep.png" alt="data dependency graph - Example 1"/>
+</center>
+<p/>
+The ordering on the children of each node in a dependency graph is
+significant: it reflects the left-to-right ordering on the dependencies
+specified as part of a rule.  For example, the first rule in the example
+above gives the dependencies of the target
+&quot;<b><tt>spellcheck.o</tt></b>&quot; in the following left-to-right
+order:
+
+<blockquote>
+<b><tt>utils.h<br/>
+    spellcheck.h<br/>
+    spellcheck.c</tt></b>
+</blockquote>
+
+The children of the node corresponding to this target in the dependency
+graph shown above reflect this ordering.
+
+<h2>2. Post-order Traversal</h2><a name="post-order"/>
+
+Let the sequence of children of the node <i>aTarget</i> be
+&lt;<i>aChild</i><sub>1</sub>, <i>aChild</i><sub>2</sub>,
+ &nbsp; <b><tt>...</tt></b>, <i>aChild</i><sub><i>n</i></sub>&gt;,
+where the ordering on the nodes <i>aChild<sub>i</sub></i>
+reflects as the ordering specified in the target
+specification for the rule for <i>aTarget</i>, as discussed above.
+The postorder traversal of the graph starting at node
+<i>aTarget</i> is carried out as follows:
+ <p/>
+ <ol>
+   <li>
+	For <i>i</i> = 1, ..., <i>n</i> (in that order),
+	if the node <i>aChild<sub>i</sub></i> has not yet been visited,
+	carry out a postorder traversal of the graph starting
+	at node <i>aChild<sub>i</sub></i>.
+	<p/>
+	</li>
+	<li>
+	Process the node <i>aTarget</i>.
+	For the purposes of this assignment, &quot;<i>processing a node</i>&quot;
+	simply means printing out its name, without any extraneous whitespace,
+	followed by a newline.
+	<p/>
+	</li>
+ </ol>
+<p/>
+<b>Example:</b> A post-order traversal of the dependency graph shown above,
+starting at the root node <b><tt>spellcheck</tt></b>, produces the
+following:
+
+<blockquote>
+<b><tt>
+    hash.c<br/>
+    utils.h<br/>
+    hash.h<br/>
+    hash.o<br/>
+    spellcheck.h<br/>
+    spellcheck.c<br/>
+    spellcheck.o<br/>
+    spellcheck</tt></b>
+</blockquote>
+
+<p/>
+Notice that <b><tt>utils.h</tt></b> only appears on the list once, even though it is
+a child of <b><tt>hash.o</tt></b> and <b><tt>spellcheck.o</tt></b>. This is
+because we don't want to visit a node a second time. What make does, and what in the next 
+assignment your program will do, is when a node is "visited", instead of printing its name 
+it will check whether it is a target that needs to be updated and run it's command if it does. 
+You don't need to do that more than once per target, and thus we don't "visit" a node more than once.
+<p/> 
+Avoiding visiting a node more than once will also keep your program from going into an 
+infinite loop if there are circular dependencies. For example, imagine if there was also a 
+dependency  from <b><tt>hash.c</tt></b> to <b><tt>spellcheck</tt></b>. Then if you were 
+traversing the graph you and visited nodes more than once, you would go from 
+<b><tt>spellcheck</tt></b> to <b><tt>hash.o</tt></b> to <b><tt>hash.c</tt></b> to <b><tt>spellcheck</tt></b>
+ to <b><tt>hash.o</tt></b> to <b><tt>hash.c</tt></b> to <b><tt>spellcheck</tt></b> to  . . . (forever)
+
+
+<h2>2. Data Structure</h2><a name="dataStructure"/>
+<p/>
+A good data structure to use for representing a graph is an adjacency list. An adjacency list
+has a linked list of structures that represent the nodes. In addition to the link to the next node,
+the structure will contain whatever information is needed for a node. This might include things like
+the target name, the command to build the target, perhaps a "visited" flag to aid in traversing the
+graph. Also, each node will point to a linked list of "edges" from that node to other nodes.
+
+An image of part of this structure for the graph pictured above is shown below. Not all the nodes are
+shown. Also, even though the image doesn't show it, all edges conatin a pointer to a node.
+
+<p/>
+<center>
+<img src="adjList.png" alt="adjacency list - Example 1"/>
+</center>
+<p/>
+
+</body>
+</html>
