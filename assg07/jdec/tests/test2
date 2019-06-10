@@ -1,0 +1,12 @@
+iconst 9
+iload z
+isub
+iconst 3
+iload fd
+iconst 21
+iconst 98
+imul
+iadd
+idiv
+isub
+

@@ -1,0 +1,4 @@
+set confirm off
+run pqrst buggy-match.c
+print p
+quit

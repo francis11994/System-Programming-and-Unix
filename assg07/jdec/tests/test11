@@ -1,0 +1,3 @@
+iconst 9
+iload d
+iconst 10

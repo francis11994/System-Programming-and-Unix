@@ -1,0 +1,4 @@
+iconst 8
+iload z
+isub
+iadd

@@ -1,0 +1,36 @@
+jdec-testgen is intended to help you test your Java Decompiler (jdec)
+program.  It reads in from stdin an expression involving the same 
+operators  as jdec, and writes to stdout a sequence of instructions
+in the same instruction set used by jdec.  So you can feed an
+expression into jdec-testgen, then take the output it produces and
+feed that into jdec, and should get back the same expression that
+you began with (except possibly for differences in whitespace).
+
+Example (the shell prompt is shown as '% '):
+-------
+
+Suppose we put the expression   (x+y)*w - z   in a file foo, then
+run jdec-testgen as follows:
+
+  % jdec-testgen  <  foo
+  Enter an expression, followed by control-D or EOF
+
+  iload  x
+  iload  y
+  iadd
+  iload  w
+  imul
+  iload  z
+  isub
+
+You can copy-paste these JVM instructions into a file, let's say bar,
+and feed it to your JVM decompiler program jdec as follows:
+
+  % jdec < bar
+
+If everything goes well, your jdec program should print out something like:
+
+  (((x + y) * w) - z)
+
+which is the same as the original expression (but fully-parenthesized
+and with whitespace differences, which are OK).
